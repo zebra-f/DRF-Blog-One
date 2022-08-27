@@ -45,10 +45,6 @@ class Post(models.Model):
     
 
     def __str__(self):
-        return self.author + '- ' + self.title
+        return f'{self.author}- {self.title}'
 
 
-
-
-
-# Create your models here.
