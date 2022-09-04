@@ -27,8 +27,10 @@ urlpatterns = [
     
     # api
     path('api/', include('blog_api.urls', namespace='blog_api')),
-    # api jwt auth
+
+    # api auth
     path('api-auth/', include('rest_framework.urls', namespace='blog_api_auth')),
+    # jwt
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
