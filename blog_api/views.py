@@ -13,8 +13,8 @@ class PostList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         # slowing down this endpoint for a front-end testing 
-        # from time import sleep
-        # sleep(2.0)
+        from time import sleep
+        sleep(1.0)
         return super().get_queryset()
     
 
