@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
@@ -8,7 +8,7 @@ from time import sleep
 
 from blog.models import Post
 from .serializers import PostSerializer
-from .permissions import PostUserUpdateDeletePermission
+from .permissions import PostUserUpdateDeleteCreatePermission
 
 
 class ReactTest(APIView):
@@ -39,13 +39,25 @@ class ReactTest(APIView):
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    permission_classes = [PostUserUpdateDeletePermission]
+    permission_classes = [PostUserUpdateDeleteCreatePermission]
     queryset = Post.postobjects.all()
     serializer_class = PostSerializer
 
+    def get_queryset(self):
+        user_name = self.request.query_params.get('username')
+        if user_name:
+            self.queryset = self.queryset.filter(author__user_name=user_name) 
+        
+        return self.queryset
 
+    # CreateModelMixin
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+    
     def list(self, request, *args, **kwargs):
+        # for React's loading page
         sleep(1.0)
+
         return super().list(request, *args, **kwargs)
 
 
