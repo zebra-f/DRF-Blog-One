@@ -16,12 +16,8 @@ class PostUserUpdateDeleteCreatePermission(BasePermission):
         if request.method in SAFE_METHODS:
             return True
         
-        if request.method == 'POST':
+        if request.method == 'POST' or request.method:
             if request.user == AnonymousUser():
                 return False
-            
-            return True
 
-    
-
-    
+        return True

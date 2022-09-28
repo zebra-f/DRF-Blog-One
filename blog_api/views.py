@@ -51,8 +51,8 @@ class PostViewSet(viewsets.ModelViewSet):
         return self.queryset
 
     # CreateModelMixin
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+    # def perform_create(self, serializer):
+    #     serializer.save(author=self.request.user)
     
     def list(self, request, *args, **kwargs):
         # for React's loading page
